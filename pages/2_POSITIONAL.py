@@ -25,23 +25,24 @@ col1,col2 = st.columns(spec=2)
 start = col1.date_input("From : ")
 end = col2.date_input("To : ")
 
+# Load data 
+df = yf.download(tickers=script,
+                    start=start.strftime("%Y-%m-%d"),
+                    end=end.strftime("%Y-%m-%d"))
+
+df.columns = ['CLOSE','HIGH','LOW','OPEN','Volume']
+df.drop('Volume',axis=1,inplace=True)
+
+
+trading_days = df.shape[0]
+calender_days = end - start
+st.info(f"Calender days selected : {calender_days.days}")
+st.info(f"Trading days selected : {trading_days}")
+
 
 if st.button(label='SUBMIT'):
 
     st.subheader("RESULTS")
-
-    # Load data 
-    df = yf.download(tickers=script,
-                        start=start.strftime("%Y-%m-%d"),
-                        end=end.strftime("%Y-%m-%d"))
-
-    df.columns = ['CLOSE','HIGH','LOW','OPEN','Volume']
-    df.drop('Volume',axis=1,inplace=True)
-
-    trading_days = df.shape[0]
-    calender_days = end - start
-    st.info(f"Calender days selected : {calender_days.days}")
-    st.info(f"Trading days selected : {trading_days}")
 
     # Fix column data type
     for i in df:
@@ -89,6 +90,11 @@ if st.button(label='SUBMIT'):
 
     st.write("Level strengths")
     st.write(data.sort_values(by='CANDLE_TOUCHES',ascending=False))
+
+    v1 = df.iloc[0,0]
+    v2 = df.iloc[-1,0]
+    change = round((v2-v1)/v1*100,2)
+    st.write(f"{trading_days} trading days change : {change} %")
 
 
 
