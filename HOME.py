@@ -17,6 +17,8 @@ st.write(text1)
 col1,col2 = st.columns(spec=2)
 
 if col1.button(label='INTRADAY >>'):
-    st.switch_page('pages/INTRADAY.py')
+    st.switch_page('pages/1_INTRADAY.py')
 if col2.button(label='POSITIONAL >>'):
-    st.switch_page('pages/POSITIONAL.py')
+    st.switch_page('pages/2_POSITIONAL.py')
+
+
