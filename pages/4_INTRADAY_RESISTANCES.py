@@ -27,7 +27,11 @@ col1,col2 = st.columns(spec=2)
 start = col1.date_input("From : ")
 end = col2.date_input("To : ")
 
-st.info("*Data window should be <= 90 calender days")
+timeframe = st.radio(label='Select Timeframe',options=['60m','15m','5m'])
+
+st.info("*for 1h : date range <= 45 calender days") 
+st.info("*for 15m and 5m : date range <= 7 calender days")
+
 
 
 if st.button(label='SUBMIT'):
@@ -36,7 +40,7 @@ if st.button(label='SUBMIT'):
     df = yf.download(tickers=script,
                         start=start.strftime("%Y-%m-%d"),
                         end=end.strftime("%Y-%m-%d"),
-                        interval='60m',
+                        interval=timeframe,
                         ignore_tz=True)
     trading_days = df.shape[0]
     calender_days = end - start
@@ -50,7 +54,11 @@ if st.button(label='SUBMIT'):
     for i in df:
         df[i] = df[i].astype(float)
 
-    data = round(df['HIGH']/50)*50
+    n = {'60m':50,'15m':25,'5m':10}
+
+    # Adjust granularity of levels according to timeframe
+    data = round(df['HIGH']/n[timeframe])*n[timeframe]
+    
     resistance_table = data.value_counts().reset_index().sort_values(by='count')
     today_price = df['CLOSE'].iloc[-1]
 
