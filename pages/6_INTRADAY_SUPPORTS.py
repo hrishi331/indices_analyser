@@ -39,7 +39,7 @@ if st.button(label='SUBMIT'):
     df = yf.download(tickers=script,
                         start=start.strftime("%Y-%m-%d"),
                         end=end.strftime("%Y-%m-%d"),
-                        interval='60m',
+                        interval=timeframe,
                         ignore_tz=True)
     trading_days = df.shape[0]
     calender_days = end - start
