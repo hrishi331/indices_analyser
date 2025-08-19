@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Header
-st.header("% Change after 'n' days".upper(),divider='gray')
+st.header("Positional Supports".upper(),divider='gray')
 
 # Take inputs
     # Select script
