@@ -7,7 +7,7 @@ import streamlit as st
 import datetime
 
 # Header
-st.header("% Change after 'n' days".upper(),divider='gray')
+st.header("Positional Levels".upper(),divider='gray')
 
 # Take inputs
     # Select script
