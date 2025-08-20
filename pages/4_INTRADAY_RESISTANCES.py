@@ -42,7 +42,6 @@ if st.button(label='SUBMIT'):
                         end=end.strftime("%Y-%m-%d"),
                         interval=timeframe,
                         ignore_tz=True)
-    st.write(df)
     trading_days = df.shape[0]
     calender_days = end - start
     st.info(f"Calender days selected : {calender_days.days}")
