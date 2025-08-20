@@ -59,7 +59,8 @@ if st.button(label='SUBMIT'):
     # Adjust granularity of levels according to timeframe
     data = round(df['HIGH']/n[timeframe])*n[timeframe]
     
-    resistance_table = data.value_counts().reset_index().sort_values(by='count')
+    resistance_table = data.value_counts().reset_index()
+    resistance_table = resistance_table.sort_values(by='count')
     today_price = df['CLOSE'].iloc[-1]
 
     resistance_table = resistance_table[resistance_table['HIGH']>today_price]
